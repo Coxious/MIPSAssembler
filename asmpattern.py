@@ -13,6 +13,9 @@ lbl      = re.compile(r'\s*((?P<LBL>\S+)\s*:)?'
 op       = re.compile(r'\s*(?P<OP>\S+)'
                       r'\s*(?P<CODE>.*)')
 
+opr0     = re.compile(r'\s*;'
+                      r'\s*(?P<CODE>.*)')
+
 opr1     = re.compile(r'\s*[$]?(?P<R0>\S+)\s*;'
                       r'\s*(?P<CODE>.*)')
 

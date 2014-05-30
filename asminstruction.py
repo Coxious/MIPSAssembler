@@ -64,5 +64,6 @@ asmdict = {
 	'swr'   :closure.Itype(pattern.opr2   ,0x2e,     lambda m:(          0 , r(m['R0']) , lbl.evaloff16(m['R1'])         )),
 	'sc'    :closure.Itype(pattern.opr2   ,0x38,     lambda m:(          0 , r(m['R0']) , lbl.evaloff16(m['R1'])         )),
 	'movn'  :closure.Rtype(pattern.opr3   ,   0, 0xb,lambda m:( r(m['R1']) , r(m['R2']) , r(m['R0']) , 0                 )),
-	'movz'  :closure.Rtype(pattern.opr3   ,   0, 0xa,lambda m:( r(m['R1']) , r(m['R2']) , r(m['R0']) , 0                 ))
+	'movz'  :closure.Rtype(pattern.opr3   ,   0, 0xa,lambda m:( r(m['R1']) , r(m['R2']) , r(m['R0']) , 0                 )),
+	'eret'  :closure.Rtype(pattern.opr0   ,0x10,  24,lambda m:(       0x10 ,          0 ,          0 , 0                 ))
 }

@@ -1,11 +1,12 @@
 
 //Life is short, use python!
+	
+	j main;
 
-//	lui $ra, 0x3000;
-//	jr $ra;
+init:
 
 	add	$zero,$zero,$zero;
-	add	$zero,$zero,$zero;
+
 	lui	$v1,0xffff;
 	addi	$v1,$zero,-256;
 	addi	$s4,$zero,0x3f;
@@ -97,3 +98,16 @@ loc_0000010c:
 	and	$t3,$a1,$t0;
 	beq     $t3,$t0,loc_0000010c;
 	j       loc_00000080;
+
+main:
+	
+	addi $at,$zero,0x180;
+	lui  $t0,0x4200;
+	ori  $t0,$zero,24;
+	sw   $t0,0($at);
+	or   $at,$zero,$zero;
+	or   $t0,$zero,$zero;
+
+	j init;
+
+	eret ;
