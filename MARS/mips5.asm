@@ -136,7 +136,7 @@ eret ;
 main:
 
 or $gp, $zero, $zero;
-lui $gp,0x30f8;
+lui $gp,0xb000;
 
 add $at,$zero,$zero;
 addi $at, $zero, 64;
@@ -146,6 +146,9 @@ lui $s0,0xc000;
 sw $at, 1($s0);
 
 nor $at, $zero, $zero;
+
+lui $s0,0xb800;
+sw $at, 0(s0);
 
 or $s0,$zero,$zero;
 lui $s0,0x30fc;
