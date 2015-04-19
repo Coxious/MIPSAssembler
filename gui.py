@@ -3,20 +3,17 @@
 
 import sys
 import os
-
-import asmpattern	 as pattern
-import asmclosure	 as closure
-import asminstruction as inst
-import asmlabel	   as lbl
-import hextobin
-
 import wx
+import asm
 
 
 class MainFrame(wx.Frame):
 	
 	ID_OPENASM = 100
 	ID_OPENCOE = 101
+	Input = ""
+	Output = ""
+	IsAssemble = True
 
 	def __init__(self, *args, **kwargs):
 		super(MainFrame, self).__init__(*args, **kwargs) 
@@ -47,10 +44,10 @@ class MainFrame(wx.Frame):
 		menubar.Append(fileMenu, '&File')
 		self.SetMenuBar(menubar)
 
-		self.SetSize((350, 250))
+		self.SetSize((150,80))
 		self.SetTitle('Submenu')
 		self.Centre()
-		wx.TextCtrl(panel, pos=(3, 3), size=(250, 150))	
+		wx.TextCtrl(panel, pos=(3, 3), size=(200,100))	
 		self.Show(True)
 		
 	def OnQuit(self, e):
@@ -63,9 +60,8 @@ class MainFrame(wx.Frame):
 							style = wx.OPEN,
 							wildcard = file_wildcard)
 		if dlg.ShowModal() == wx.ID_OK:
-			self.filename = dlg.GetPath()
-			self.ReadFile()
-			self.SetTitle(self.title + '--' + self.filename)
+			self.Input= dlg.GetPath()
+			self.IsAssemble = True
 		dlg.Destroy()
 	
 
@@ -76,19 +72,30 @@ class MainFrame(wx.Frame):
 							style = wx.OPEN,
 							wildcard = file_wildcard)
 		if dlg.ShowModal() == wx.ID_OK:
-			self.filename = dlg.GetPath()
+			self.Input= dlg.GetPath()
+			self.IsAssemble = False
 		dlg.Destroy()
 	
 	def OnSave(self, event):
 		file_wildcard = "All files(*.*)|*.*" 
 		dlg = wx.FileDialog(self, "Open file...",
 							os.getcwd(), 
-							style = wx.OPEN,
+							style = wx.SAVE,
 							wildcard = file_wildcard)
 		if dlg.ShowModal() == wx.ID_OK:
-			self.filename = dlg.GetPath()
+			self.Output = dlg.GetPath()
 		dlg.Destroy()
 
+		#try:
+		if IsAssemble:
+			asm.compileFile(self.Input,self.Output)
+		else:
+			pass
+		#except:
+	#		error = sys.exc_info()[0]
+	#		print error
+	#		#extra = " ".join([str(x) for x  in error.args])
+	#		wx.MessageBox(str(error),'Error',wx.OK|wx.ICON_ERROR)	
 
 def main():
 	

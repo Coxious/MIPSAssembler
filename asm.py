@@ -52,7 +52,10 @@ def main(argv):
 	if len(argv) == 3:
 		hextobin.main(argv[1:])
 
+def compileFile(fileIn,fileOut):
+	with open(fileIn, "r") as fin:
+		with open(fileOut, "w") as fout:
+			compile(fin, fout)
 
 if __name__ == '__main__':
 	main(sys.argv[1:])
-	
