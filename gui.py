@@ -86,8 +86,10 @@ class MainFrame(wx.Frame):
 			self.Output = dlg.GetPath()
 		dlg.Destroy()
 
+		print self.Input
+		print self.Output
 		#try:
-		if IsAssemble:
+		if self.IsAssemble:
 			asm.compileFile(self.Input,self.Output)
 		else:
 			pass
