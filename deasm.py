@@ -23,7 +23,8 @@ def compileCoe(fin,fout):
 	asmCode = []
 	lines = fin.readlines()
 	instList = [x[0:8] for x in lines if x[0] != 'm']
-	compile(instList)
+	finalAsm = compile(instList)
+	fout.write(finalAsm)
 
 def addLableToAsm(asmCode):
 	finalAsm = []

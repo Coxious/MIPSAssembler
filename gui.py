@@ -5,6 +5,7 @@ import sys
 import os
 import wx
 import asm
+import deasm
 
 
 class MainFrame(wx.Frame):
@@ -44,10 +45,10 @@ class MainFrame(wx.Frame):
 		menubar.Append(fileMenu, '&File')
 		self.SetMenuBar(menubar)
 
-		self.SetSize((150,80))
+		self.SetSize((400,300))
 		self.SetTitle('Submenu')
 		self.Centre()
-		wx.TextCtrl(panel, pos=(3, 3), size=(200,100))	
+		wx.TextCtrl(panel, pos=(3, 3), size=(400,300),style=(wx.TE_MULTILINE | wx.TE_AUTO_SCROLL | wx.TE_DONTWRAP))	
 		self.Show(True)
 		
 	def OnQuit(self, e):
@@ -92,7 +93,7 @@ class MainFrame(wx.Frame):
 		if self.IsAssemble:
 			asm.compileFile(self.Input,self.Output)
 		else:
-			pass
+			deasm.compileFile(self.Input,self.Output)
 		#except:
 	#		error = sys.exc_info()[0]
 	#		print error
