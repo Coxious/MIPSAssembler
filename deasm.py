@@ -26,6 +26,14 @@ def compileCoe(fin,fout):
 	finalAsm = compile(instList)
 	fout.write(finalAsm)
 
+def compileCoeText(textIn):
+	lines = textIn.split('\n')
+	print lines
+	instList = [x[0:8] for x in lines if len(x) != 0 and x[0] != 'm']
+	finalAsm = compile(instList)
+	return finalAsm
+
+
 def addLableToAsm(asmCode):
 	finalAsm = []
 	for i in range(len(asmCode)):

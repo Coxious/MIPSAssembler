@@ -22,6 +22,26 @@ def parse(code):
 	lbl.lineno += codelen
 	return codehex
 
+def compileText(textIn):
+	outData = ""
+	textLine = textIn.split("\n")
+	lbl.lineno = lineno_base
+	for line in textLine:
+		hexcode = parse(line)
+	lbl.passno = 1
+	lbl.lineno = lineno_base
+	outData = outData + 'memory_initialization_radix=16;\n'
+	outData = outData + 'memory_initialization_vector=\n'
+	init = True
+	for line in textLine:
+		hexcode = parse(line)
+		if hexcode:
+			if not init: outData = outData + ',\n'
+			outData = outData + hexcode
+			init = False
+	outData = outData + ';\n'
+	return outData
+
 def compile(fin, fout):
 	lbl.lineno = lineno_base
 	for line in fin:
