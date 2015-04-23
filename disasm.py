@@ -2,13 +2,13 @@
 #Life is short, use python!
 
 import sys
-import deasmclosure
+import disasmclosure
 import struct
 
 def parse(code,currentLine):
 	intCode = int(code,16)
 	op = intCode >> 26
-	return deasmclosure.opDict[op](intCode,currentLine)
+	return disasmclosure.opDict[op](intCode,currentLine)
 
 def compile(instList):
 	asmCode = []
@@ -37,7 +37,7 @@ def compileCoeText(textIn):
 def addLableToAsm(asmCode):
 	finalAsm = []
 	for i in range(len(asmCode)):
-		if i in deasmclosure.lableList:
+		if i in disasmclosure.lableList:
 			finalAsm.append("Lable%x:"%i)
 		finalAsm.append("\t"+asmCode[i])
 	return "\n".join(finalAsm)

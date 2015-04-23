@@ -5,7 +5,7 @@ import sys
 import os
 import wx
 import asm
-import deasm
+import disasm
 
 
 class MainFrame(wx.Frame):
@@ -39,7 +39,7 @@ class MainFrame(wx.Frame):
 		scoemi= wx.MenuItem(fileMenu, self.ID_SAVEASM ,'&Save ASM file')
 		sasmmi= wx.MenuItem(fileMenu, self.ID_SAVECOE ,'&Save COE file')
 		assemble= wx.MenuItem(fileMenu, self.ID_ASM,'&Assemble')
-		deassemble= wx.MenuItem(fileMenu, self.ID_DISASM,'&Disassemble')
+		disassemble= wx.MenuItem(fileMenu, self.ID_DISASM,'&Disassemble')
 
 		fileMenu.AppendItem(asmmi)
 		fileMenu.AppendItem(coemi)
@@ -52,7 +52,7 @@ class MainFrame(wx.Frame):
 		fileMenu.AppendSeparator()
 
 		fileMenu.AppendItem(assemble)
-		fileMenu.AppendItem(deassemble)
+		fileMenu.AppendItem(disassemble)
 
 		fileMenu.AppendSeparator()
 		fileMenu.AppendItem(qmi)
@@ -63,7 +63,7 @@ class MainFrame(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.OnSaveAsm, scoemi)
 		self.Bind(wx.EVT_MENU, self.OnSaveCoe, sasmmi)
 		self.Bind(wx.EVT_MENU, self.OnAssemble, assemble)
-		self.Bind(wx.EVT_MENU, self.OnDisassemble, deassemble)
+		self.Bind(wx.EVT_MENU, self.OnDisassemble, disassemble)
 
 		menubar.Append(fileMenu, '&File')
 		self.SetMenuBar(menubar)
@@ -91,7 +91,7 @@ class MainFrame(wx.Frame):
 	def OnDisassemble(self,event):
 		try:
 			textIn = self.textCoe.GetString(0,-1)
-			textOut = deasm.compileCoeText(textIn)
+			textOut = disasm.compileCoeText(textIn)
 			self.textAsm.Clear()
 			self.textAsm.AppendText(textOut)
 		except:
