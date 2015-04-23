@@ -67,13 +67,13 @@ def DecodeItype(code,currentLine,name):
 	rs = (code >> 21) & 31
 	rt = (code >> 16) & 31
 	imme = code & 2**16-1
-#	if imme & 2**15 != 0:
-#		imme = -(2**16-imme)
+	if imme & 2**15 != 0:
+		imme = -(2**16-imme)
 	
 	if name[0:2] == "sw" or name[0:2]=="lw":
 		return "%s\t$%s,\t%d($%s);"%(name,regDict[rt],imme,regDict[rs])
 	elif name == "lui":
-		return "%s\t$%s,\t0x%x;"%(name,regDict[rt],imme)
+		return "%s\t$%s,\t%d;"%(name,regDict[rt],imme)
 	elif name[0]=='b' and name != 'break':
 		target = currentLine+1+imme
 		addLable(target)	
