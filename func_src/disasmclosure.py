@@ -17,8 +17,6 @@ opDict = {
 	 0xb:lambda code,currentLine:(DecodeItype(code,currentLine,'sltiu' )), 
 	 0xf:lambda code,currentLine:(DecodeItype(code,currentLine,'lui'   )), 
 	   4:lambda code,currentLine:(DecodeItype(code,currentLine,'beq'   )), 
-	   4:lambda code,currentLine:(DecodeItype(code,currentLine,'beqz'  )), 
-	   1:lambda code,currentLine:(DecodeItype(code,currentLine,'bgez'  )), 
 	   1:lambda code,currentLine:(DecodeItype(code,currentLine,'bgezal')),
 	   7:lambda code,currentLine:(DecodeItype(code,currentLine,'bgtz'  )), 
 	   6:lambda code,currentLine:(DecodeItype(code,currentLine,'blez'  )), 
@@ -67,19 +65,23 @@ def DecodeItype(code,currentLine,name):
 	rs = (code >> 21) & 31
 	rt = (code >> 16) & 31
 	imme = code & 2**16-1
+	preMinus = ""
 	if imme & 2**15 != 0:
-		imme = -(2**16-imme)
-	
+		imme = (2**16-imme)
+		preMinus = "-"
+	#if name 
 	if name[0:2] == "sw" or name[0:2]=="lw":
 		return "%s\t$%s,\t%d($%s);"%(name,regDict[rt],imme,regDict[rs])
 	elif name == "lui":
-		return "%s\t$%s,\t%d;"%(name,regDict[rt],imme)
+		return "%s\t$%s,\t%s0x%x;"%(name,regDict[rt],preMinus,imme)
 	elif name[0]=='b' and name != 'break':
+		if preMinus == '-':
+			imme = - imme
 		target = currentLine+1+imme
 		addLable(target)	
-		return "%s\t$%s,\t$%s,\tLable%x;"%(name,regDict[rt],regDict[rs],target)
+		return "%s\t$%s,\t$%s,\tLable%x;"%(name,regDict[rs],regDict[rt],target)
 	else:
-		return "%s\t$%s,\t$%s,\t0x%x;"%(name,regDict[rt],regDict[rs],imme)
+		return "%s\t$%s,\t$%s,\t%s0x%x;"%(name,regDict[rt],regDict[rs],preMinus,imme)
 
 def DecodeJtype(code,currentLine,name):
 
